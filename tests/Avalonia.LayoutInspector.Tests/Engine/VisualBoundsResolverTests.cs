@@ -103,7 +103,7 @@ public class VisualBoundsResolverTests
         Assert.Equal(500, bounds.Value.Height);
     }
 
-    [Fact]
+    [AvaloniaFact]
     public void GetVisualPath_GeneratesCorrectBreadcrumbHierarchy()
     {
         var root = new StackPanel { Name = "RootPanel" };
@@ -119,7 +119,7 @@ public class VisualBoundsResolverTests
         Assert.Equal("StackPanel#RootPanel > Border > Button#SubmitBtn", path);
     }
 
-    [Fact]
+    [AvaloniaFact]
     public void GetVisualPath_RootOnly_ReturnsRootName()
     {
         var root = new StackPanel { Name = "MainRoot" };
@@ -129,7 +129,7 @@ public class VisualBoundsResolverTests
         Assert.Equal("StackPanel#MainRoot", path);
     }
 
-    [Fact]
+    [AvaloniaFact]
     public void AuditReport_EnsureSuccess_ThrowsWhenHasErrors()
     {
         var root = new Canvas();
@@ -159,7 +159,7 @@ public class VisualBoundsResolverTests
         Assert.Contains("Element violates boundary constraint", ex.Message);
     }
 
-    [Fact]
+    [AvaloniaFact]
     public void AuditReport_EnsureSuccess_DoesNotThrowWhenCleanOrWarningsOnly()
     {
         var root = new Canvas();
@@ -198,7 +198,7 @@ public class VisualBoundsResolverTests
         cleanReport.EnsureSuccess(); // Should not throw
     }
 
-    [Fact]
+    [AvaloniaFact]
     public void AuditReport_ToDetailedReport_FormatsCorrectly()
     {
         var root = new Canvas();
