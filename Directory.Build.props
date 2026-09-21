@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>13.0</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Version>1.0.0</Version>
+    <Authors>Steven T. Pelech</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/spelech/Avalonia.LayoutInspector</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/spelech/Avalonia.LayoutInspector</RepositoryUrl>
+    <PackageTags>avalonia;layout;inspector;ui-testing;headless;ergonomics;responsive</PackageTags>
+    <Description>Automated layout auditing, overflow detection, sibling collision checking, and responsive viewport inspection for Avalonia UI.</Description>
+  </PropertyGroup>
+</Project>

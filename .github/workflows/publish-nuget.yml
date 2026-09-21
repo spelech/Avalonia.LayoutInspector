@@ -1,0 +1,41 @@
+name: Publish NuGet Package
+
+on:
+  push:
+    tags:
+      - 'v*'
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - name: Restore Dependencies
+        run: dotnet restore Avalonia.LayoutInspector.slnx
+
+      - name: Build Solution
+        run: dotnet build Avalonia.LayoutInspector.slnx --configuration Release --no-restore
+
+      - name: Run Tests
+        run: dotnet test Avalonia.LayoutInspector.slnx --configuration Release --no-build --verbosity normal
+
+      - name: Pack NuGet Packages
+        run: dotnet pack src/Avalonia.LayoutInspector/Avalonia.LayoutInspector.csproj --configuration Release --no-build --output ./artifacts
+
+      - name: Push to NuGet
+        run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
