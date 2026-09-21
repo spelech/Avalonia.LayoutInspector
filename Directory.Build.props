@@ -5,7 +5,6 @@
     <LangVersion>13.0</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Version>1.0.0</Version>
-    <PackageId>AvaloniaLayoutInspector</PackageId>
     <Authors>Steven T. Pelech</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/spelech/Avalonia.LayoutInspector</PackageProjectUrl>
