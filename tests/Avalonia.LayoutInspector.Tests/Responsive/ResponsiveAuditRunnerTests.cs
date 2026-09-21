@@ -115,6 +115,20 @@ public class ResponsiveAuditRunnerTests
     }
 
     [AvaloniaFact]
+    public void Run_Control_RestoresOriginalDimensions()
+    {
+        var control = new Border { Width = 250, Height = 180 };
+        var bp1 = new Breakpoint("Phone", 360, 640);
+        var bp2 = new Breakpoint("Tablet", 768, 1024);
+
+        var runner = new ResponsiveAuditRunner();
+        runner.Run(control, new[] { bp1, bp2 });
+
+        Assert.Equal(250, control.Width);
+        Assert.Equal(180, control.Height);
+    }
+
+    [AvaloniaFact]
     public void Run_NullArguments_ThrowsArgumentNullException()
     {
         var runner = new ResponsiveAuditRunner();

@@ -36,7 +36,7 @@ public class VisualBoundsResolver : IVisualBoundsResolver
             segments.Add(name);
             current = current.GetVisualParent();
         }
-        if (root != null)
+        if (current == root && root != null)
         {
             var rootName = root is Avalonia.Controls.Control rc && !string.IsNullOrEmpty(rc.Name)
                 ? $"{root.GetType().Name}#{rc.Name}"

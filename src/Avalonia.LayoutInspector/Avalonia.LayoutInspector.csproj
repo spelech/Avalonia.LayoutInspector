@@ -3,13 +3,8 @@
     <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     <PackageId>Avalonia.LayoutInspector</PackageId>
     <Title>Avalonia.LayoutInspector</Title>
-    <Version>1.0.0</Version>
-    <Authors>Steven T. Pelech</Authors>
-    <Description>Automated layout auditing, overflow detection, sibling collision checking, and responsive viewport inspection for Avalonia UI.</Description>
-    <PackageTags>avalonia;layout;inspector;ui-testing;headless;ergonomics;responsive</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/spelech/Avalonia.LayoutInspector</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/spelech/Avalonia.LayoutInspector</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

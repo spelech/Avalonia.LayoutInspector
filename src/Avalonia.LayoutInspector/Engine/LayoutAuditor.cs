@@ -56,11 +56,9 @@ public class LayoutAuditor : ILayoutAuditor
             viewportSize = root.Bounds.Size;
         }
 
-        var allRules = new List<ILayoutAuditRule>(_rules);
-        if (options.CustomRules != null && options.CustomRules.Count > 0)
-        {
-            allRules.AddRange(options.CustomRules);
-        }
+        IEnumerable<ILayoutAuditRule> allRules = options.CustomRules?.Count > 0
+            ? _rules.Concat(options.CustomRules)
+            : _rules;
 
         var violations = new List<LayoutViolation>();
         foreach (var rule in allRules)

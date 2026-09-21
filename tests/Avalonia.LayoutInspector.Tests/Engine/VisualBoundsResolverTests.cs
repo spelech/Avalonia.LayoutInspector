@@ -130,6 +130,18 @@ public class VisualBoundsResolverTests
     }
 
     [AvaloniaFact]
+    public void GetVisualPath_DetachedVisual_DoesNotIncludeRootName()
+    {
+        var root = new StackPanel { Name = "MainRoot" };
+        var detached = new Button { Name = "DetachedBtn" };
+        var resolver = new VisualBoundsResolver();
+        var path = resolver.GetVisualPath(detached, root);
+
+        Assert.Equal("Button#DetachedBtn", path);
+        Assert.DoesNotContain("MainRoot", path);
+    }
+
+    [AvaloniaFact]
     public void AuditReport_EnsureSuccess_ThrowsWhenHasErrors()
     {
         var root = new Canvas();

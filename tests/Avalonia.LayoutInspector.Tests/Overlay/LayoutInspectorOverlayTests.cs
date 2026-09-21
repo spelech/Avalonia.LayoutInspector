@@ -253,6 +253,62 @@ public class LayoutInspectorOverlayTests
         Assert.NotNull(overlay.CurrentReport);
     }
 
+    [AvaloniaFact]
+    public void Attach_WithCustomAuditor_UsesProvidedAuditor()
+    {
+        var window = new Window { Width = 500, Height = 500 };
+        var report = new AuditReport
+        {
+            Root = window,
+            ViewportSize = new Size(500, 500),
+            Violations = Array.Empty<LayoutViolation>(),
+            HealthScore = 99
+        };
+        var mockAuditor = new MockAuditor(report);
+        var overlay = LayoutInspectorOverlay.Attach(window, auditor: mockAuditor);
+
+        Assert.NotNull(overlay);
+        Assert.Same(report, overlay.CurrentReport);
+        Assert.Equal(99, overlay.CurrentReport!.HealthScore);
+    }
+
+    [AvaloniaFact]
+    public void RenderViolations_DeduplicatesOverflowContainerBackground()
+    {
+        var window = new Window { Width = 500, Height = 500 };
+        var containerRect = new Rect(10, 10, 200, 200);
+        var child1 = new Border();
+        var child2 = new Border();
+
+        var violations = new List<LayoutViolation>
+        {
+            new("LAYOUT001_OVERFLOW", ViolationSeverity.Error, "Root/C1", child1, new Rect(10, 10, 250, 100), containerRect, "Overflow 1", "Fix"),
+            new("LAYOUT001_OVERFLOW", ViolationSeverity.Error, "Root/C2", child2, new Rect(10, 120, 250, 100), containerRect, "Overflow 2", "Fix")
+        };
+
+        var report = new AuditReport
+        {
+            Root = window,
+            ViewportSize = new Size(500, 500),
+            Violations = violations,
+            HealthScore = 50
+        };
+
+        var overlay = new LayoutInspectorOverlay(window, null, new MockAuditor(report));
+        overlay.ShowHudBadge = false;
+        overlay.ShowHighlights = true;
+        overlay.RefreshAudit();
+
+        var group = new DrawingGroup();
+        using (var context = group.Open())
+        {
+            overlay.Render(context);
+        }
+
+        // 1 container rect + 2 child rects = 3 drawing operations (instead of 2 + 2 = 4)
+        Assert.Equal(3, group.Children.Count);
+    }
+
     private class MockAuditor : ILayoutAuditor
     {
         private readonly AuditReport _report;

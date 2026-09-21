@@ -146,4 +146,23 @@ public class BoundaryOverflowRuleTests
 
         Assert.Empty(violations);
     }
+
+    [AvaloniaFact]
+    public void Ignores_Popup_And_FlyoutPresenter()
+    {
+        var root = new Canvas { Width = 500, Height = 500 };
+        var parent = new Canvas { Width = 100, Height = 100 };
+        var flyoutPresenter = new FlyoutPresenter { Width = 300, Height = 300 };
+        parent.Children.Add(flyoutPresenter);
+        root.Children.Add(parent);
+
+        root.Measure(new Size(500, 500));
+        root.Arrange(new Rect(0, 0, 500, 500));
+
+        var rule = new BoundaryOverflowRule();
+        var resolver = new VisualBoundsResolver();
+        var violations = rule.Evaluate(root, resolver, new AuditOptions()).ToList();
+
+        Assert.DoesNotContain(violations, x => x.TargetElement == flyoutPresenter);
+    }
 }

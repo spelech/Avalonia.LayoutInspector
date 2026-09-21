@@ -97,23 +97,23 @@ public class LayoutInspectorOverlay : Control
     /// <summary>
     /// Attaches a layout inspector overlay to a Window.
     /// </summary>
-    public static LayoutInspectorOverlay Attach(Window window, AuditOptions? options = null)
+    public static LayoutInspectorOverlay Attach(Window window, AuditOptions? options = null, ILayoutAuditor? auditor = null)
     {
         ArgumentNullException.ThrowIfNull(window);
-        return Attach((TopLevel)window, options);
+        return Attach((TopLevel)window, options, auditor);
     }
 
     /// <summary>
     /// Attaches a layout inspector overlay to a TopLevel.
     /// </summary>
-    public static LayoutInspectorOverlay Attach(TopLevel topLevel, AuditOptions? options = null)
+    public static LayoutInspectorOverlay Attach(TopLevel topLevel, AuditOptions? options = null, ILayoutAuditor? auditor = null)
     {
         ArgumentNullException.ThrowIfNull(topLevel);
 
         var existing = AdornerLayer.GetAdorner(topLevel) as LayoutInspectorOverlay;
         existing?.Detach();
 
-        var overlay = new LayoutInspectorOverlay(topLevel, options);
+        var overlay = new LayoutInspectorOverlay(topLevel, options, auditor);
         overlay.AttachToTarget(topLevel);
         return overlay;
     }
@@ -200,13 +200,18 @@ public class LayoutInspectorOverlay : Control
             return;
         }
 
+        var renderedContainers = new HashSet<Rect>();
+
         foreach (var violation in CurrentReport.Violations)
         {
             var (pen, fill) = GetStyleForViolation(violation.RuleId);
 
             if (violation.RuleId == "LAYOUT001_OVERFLOW" && violation.RelatedBoundingBox.HasValue)
             {
-                context.DrawRectangle(OverflowContainerFill, OverflowContainerPen, violation.RelatedBoundingBox.Value);
+                if (renderedContainers.Add(violation.RelatedBoundingBox.Value))
+                {
+                    context.DrawRectangle(OverflowContainerFill, OverflowContainerPen, violation.RelatedBoundingBox.Value);
+                }
             }
 
             context.DrawRectangle(fill, pen, violation.BoundingBox);

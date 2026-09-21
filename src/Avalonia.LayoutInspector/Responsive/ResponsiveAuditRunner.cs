@@ -52,21 +52,30 @@ public class ResponsiveAuditRunner
             return Run(window, breakpoints, options);
         }
 
-        var results = new Dictionary<Breakpoint, AuditReport>();
-
-        foreach (var bp in breakpoints)
+        var (originalWidth, originalHeight) = (control.Width, control.Height);
+        try
         {
-            control.Width = bp.Width;
-            control.Height = bp.Height;
-            control.Measure(new Size(bp.Width, bp.Height));
-            control.Arrange(new Rect(0, 0, bp.Width, bp.Height));
-            control.UpdateLayout();
+            var results = new Dictionary<Breakpoint, AuditReport>();
 
-            var report = _auditor.Audit(control, options);
-            results[bp] = report;
+            foreach (var bp in breakpoints)
+            {
+                control.Width = bp.Width;
+                control.Height = bp.Height;
+                control.Measure(new Size(bp.Width, bp.Height));
+                control.Arrange(new Rect(0, 0, bp.Width, bp.Height));
+                control.UpdateLayout();
+
+                var report = _auditor.Audit(control, options);
+                results[bp] = report;
+            }
+
+            return new ResponsiveAuditReport { BreakpointReports = results };
         }
-
-        return new ResponsiveAuditReport { BreakpointReports = results };
+        finally
+        {
+            control.Width = originalWidth;
+            control.Height = originalHeight;
+        }
     }
 
     private static void ResizeWindow(Window window, double width, double height)

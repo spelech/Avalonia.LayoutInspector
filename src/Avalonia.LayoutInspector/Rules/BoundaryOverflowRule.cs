@@ -129,6 +129,11 @@ public class BoundaryOverflowRule : ILayoutAuditRule
 
     private static bool IsPopupOrFlyout(Visual visual)
     {
+        if (visual is Popup || visual is PopupRoot || visual is FlyoutPresenter)
+        {
+            return true;
+        }
+
         var name = visual.GetType().Name;
         return name.Contains("Popup", StringComparison.OrdinalIgnoreCase) ||
                name.Contains("Flyout", StringComparison.OrdinalIgnoreCase);
