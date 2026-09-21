@@ -2,7 +2,7 @@
 
 Automated layout auditing, boundary overflow detection, sibling collision checking, touch target ergonomics validation, and responsive viewport inspection for Avalonia UI.
 
-[![NuGet](https://img.shields.io/nuget/v/Avalonia.LayoutInspector.svg)](https://www.nuget.org/packages/Avalonia.LayoutInspector)
+[![NuGet](https://img.shields.io/nuget/v/AvaloniaLayoutInspector.svg)](https://www.nuget.org/packages/AvaloniaLayoutInspector)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ## Overview
@@ -24,7 +24,7 @@ Automated layout auditing, boundary overflow detection, sibling collision checki
 Install the package from NuGet:
 
 ```bash
-dotnet add package Avalonia.LayoutInspector
+dotnet add package AvaloniaLayoutInspector
 ```
 
 ## Quick Start

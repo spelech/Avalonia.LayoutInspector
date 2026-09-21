@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
-    <PackageId>Avalonia.LayoutInspector</PackageId>
-    <Title>Avalonia.LayoutInspector</Title>
+    <PackageId>AvaloniaLayoutInspector</PackageId>
+    <Title>AvaloniaLayoutInspector</Title>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/spelech/Avalonia.LayoutInspector</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
